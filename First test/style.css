@@ -1,0 +1,27 @@
+
+
+body{
+    text-align: center;
+    font-family: Arial;
+    background-color: yellow;
+}
+
+#sigma {
+    color: firebrick;
+}
+
+.base {
+    background: linear-gradient( khaki);
+    margin: 0px  50px 20px 50px;
+    padding: 5px 10px 10px;
+    border: 10px solid lime;
+}
+button{
+    background: linear-gradient(white, gray);
+}
+.urls{
+    margin-top: 50px;
+}
+button:active{
+    background: linear-gradient(gray, darkgray);
+}

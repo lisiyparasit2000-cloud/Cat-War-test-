@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <title>CWR</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <img src="baner.jpg">
+
+        <div class="base">
+            <h1>Настройки</h1>
+            <noscript>В вашем браузере отключен или неработает JavaScript. Изза этого ни настройки ни игровая . Почти ничего не будет работать!</noscript>
+            <button onclick="clearstorage()">Очистить Local Storage.</button><br>
+            <div class="urls"><a href="index.html">Домашняя</a> <a  href="about.html">Об игре</a> <a  href="CT0.html">Игровая</a><a href="settings.html"> Настройки</a></div>
+        </div>
+        <script src="second.js"></script>
+        <script> 
+            function clearstorage(){
+                localStorage.clear
+                let warning = confirm('Вы уверены? все сохрания пропадут!')
+                if (warning) {
+                    localStorage.clear
+                }
+
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            body{
+                font-family: Arial;
+                background-color: yellow;
+            }
+            #CT0 {
+                position: relative;
+            }
+            #backgrounds {
+                display: block;
+            }
+            #player{
+                position: absolute;
+                top: 400px;
+                left: 700px;
+            }
+            body a{
+                position: relative;
+                text-align: left;
+            }
+            #rmove{
+                visibility: hidden;
+            }
+            #lmove{
+                visibility: hidden;
+            }
+            .qwerty {
+                height: 50px;
+                width: 50px;
+                margin-bottom: 10px;
+                visibility: visible;
+            }
+            button{
+                background: linear-gradient(white, darkgray);
+            }  
+            button:active{
+                background: linear-gradient(gray, darkgray);
+            }
+            #sleepbut{
+                visibility: hidden;
+            }
+            #timer{
+                display: none;
+            }
+        </style>
+        <title>CWR</title>
+    </head>
+    <body>
+        <img src="baner.jpg" id="sigma" style="display: block;">
+        <noscript>Требуется JavaScript для работы!!!</noscript>
+        <div class="energy"><p id="energytxt">Бодрость: NaN</p></div><br> <!--Параметры                     -->
+        <p id="timer">Ошибка!</p>
+        <div id="CT0">
+            <img src="back/CT0.jpg" id="backgrounds">
+            <img src="cats/cat1.PNG" id="player">
+        </div>
+        <script src="second.js"></script>
+        <a href="index.html">На главную</a> <a href="settings.html">Настройки</a>
+        <button onclick="right()" class="qwerty"><</button><button onclick="left()" class="qwerty">></button> <button onclick="sleep()" id="sleepbut">Поспать</button> <button onclick="update(0)">Обновить</button><br>
+        <button id="lmove" onclick="update(-1)">Переместиться налево</button>
+        <button onclick="update(1)" id="rmove">Переместиться направо</button>
+        <script>update(0)</script>
+    </body>
+</html>
