@@ -1,9 +1,11 @@
 let player = document.getElementById('player')
 let xpos = 700
 let locat = document.getElementById('backgrounds') 
-var world = [["back/CT0.jpg", false], ["back/CT1.jpg", false],["back/CT2.jpg",false], ["back/CT3.jpg",false], ["back/CT4.jpg"]] // массив локаций. 0 - фон, 2 - доступность охоты. 1 - Вода или нет? 
+var world = [["back/CT0.jpg", false], ["back/CT1.jpg", false],["back/CT2.jpg",false], ["back/CT3.jpg",false], ["back/CT4.jpg", true]] // массив локаций. 0 - фон, 2 - доступность охоты. 1 - Вода или нет? 
 let aworld = 0
 var energy = 100
+var heal = 100
+var pain = 0
 if (localStorage.getItem('Xpos') !== null && localStorage.getItem('Xpos') !== undefined && localStorage.getItem('Xpos') !== 0) {
     aworld = parseInt(localStorage.getItem('Xpos'))
     console.log('ERROR' + localStorage.getItem('Xpos'))
@@ -19,6 +21,13 @@ function right(){ //Кот идёт влево
     console.log(xpos)
     update(0)
     energy--
+    if (world[aworld][1]){
+        energy = energy - 9
+        if (energy < 10){
+            heal-=5
+            pain++
+        }
+    }
 }
 function left(){ // кот идёт вправо
     xpos+=100
@@ -31,13 +40,19 @@ function left(){ // кот идёт вправо
     console.log(xpos)
     update(0)
     energy--
+    if (world[aworld][1]){
+        energy = energy - 9
+        if (energy < 10){
+            heal-=5
+        }
+    }
 }
 function update(lengt){
     let rmovebut = document.getElementById('rmove')
     let lmovebut = document.getElementById('lmove')
     let energytext = document.getElementById('energytxt')
     aworld+=lengt
-        if (lengt != 0){
+        if (lengt != 0){ // Если смена локации
         xpos = 700
         player.style.left=xpos+"px"
         
@@ -73,6 +88,11 @@ function update(lengt){
         sleepbut.style.visibility = 'hidden'
     }
     localStorage.setItem("Xpos",(aworld))
+    if (lengt != 0) { // Смена локации
+        if (pain > 2){
+            energy-=3
+        }
+    }
 }
 function sleep(){
     let qwerty = document.getElementsByClassName('qwerty')
@@ -84,26 +104,39 @@ function sleep(){
     qwerty[1].style.visibility = 'hidden'
     sleepbut.style.visibility = 'hidden'
     timer.style.visibility = 'visible'
+    timer.style.display = "inline"
+    timer.innerText=("Спать ещё: "+i+" секунд.")
     let countdown = setInterval(function() {
-        timer.style.display = 'inline'
-        timer.innerText=("Спать ещё: "+i+" секунд.")
         i--
+        timer.innerText=("Спать ещё: "+i+" секунд.")
+        
         if (i <= 0) {
             clearInterval(countdown);
             qwerty[0].style.visibility = 'visible'
             qwerty[1].style.visibility = 'visible'
-            sleepbut.style.visibility = 'visible'
+            sleepbut.style.visibility = 'hidden'
+            timer.style.visibility = 'hidden'
+            timer.style.display = "none"
         }
     },1000)
-    timer.style.display='none'
-    timer.style.visibility = 'hidden'
+    
     update(0)
 }
-function clearstorage(){
-    localStorage.clear
-    let warning = confirm('Вы уверены? все сохрания пропадут!')
-    if (warning) {
-        localStorage.clear
-    }
 
+function health(){
+    if (heal == 100 && pain == 0){
+        alert('Я чувствую себя хорошо.')
+    }else if(pain <= 2 && heal >= 80){
+        alert('Мне не очень хорошо, слегка больно')
+    }else if(pain >=3 && pain < 5){
+        alert('Довольно больно!')
+    }else if(pain >= 5 && pain < 9){
+        alert('Очень больно!')
+    }else if(pain >= 9){
+        alert('ААААААААААА!')
+    }else if(heal <= 90 && pain == 0 && heal > 50){
+        alert('Мне не очень хорошо.')
+    }else if(heal <=50 &&pain <=2){
+        alert('Мне плохо.')
+    }
 }

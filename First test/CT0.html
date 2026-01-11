@@ -44,6 +44,7 @@
                 visibility: hidden;
             }
             #timer{
+                visibility: visible;
                 display: none;
             }
         </style>
@@ -60,7 +61,8 @@
         </div>
         <script src="second.js"></script>
         <a href="index.html">На главную</a> <a href="settings.html">Настройки</a>
-        <button onclick="right()" class="qwerty"><</button><button onclick="left()" class="qwerty">></button> <button onclick="sleep()" id="sleepbut">Поспать</button> <button onclick="update(0)">Обновить</button><br>
+        <button onclick="right()" class="qwerty"><</button><button onclick="left()" class="qwerty">></button> 
+        <button onclick="sleep()" id="sleepbut">Поспать</button> <button onclick="update(0)">Обновить</button><button onclick="health()">Здоровье</button><br>
         <button id="lmove" onclick="update(-1)">Переместиться налево</button>
         <button onclick="update(1)" id="rmove">Переместиться направо</button>
         <script>update(0)</script>
