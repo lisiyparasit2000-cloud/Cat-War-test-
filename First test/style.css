@@ -17,11 +17,18 @@ body{
     border: 10px solid lime;
 }
 button{
-    background: linear-gradient(white, gray);
-}
+    background: linear-gradient(Silver, white, Silver);
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px ;
+    }  
+    button:hover{
+    border-color: aqua;
+    }
+    button:active{
+    background: silver;
+    box-shadow: 1px 1px 0.5px ;
+    }
 .urls{
     margin-top: 50px;
 }
-button:active{
-    background: linear-gradient(gray, darkgray);
-}
+

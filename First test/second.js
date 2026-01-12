@@ -44,6 +44,7 @@ function left(){ // кот идёт вправо
         energy = energy - 9
         if (energy < 10){
             heal-=5
+            pain++
         }
     }
 }
@@ -79,26 +80,37 @@ function update(lengt){
     if (energy > 100) {
         energy = 100
     }
-    energytext.innerText = "Бодрость: " + energy+'%'
+    energytext.innerText = "Бодрость: " + energy+'%' //Отображение бодрости
     if (energy < 50){
-        let sleepbut = document.getElementById('sleepbut')
+        let sleepbut = document.getElementById('sleepbut') //отоброжение кнопки поспать
         sleepbut.style.visibility = 'visible'
     }else{
         let sleepbut = document.getElementById('sleepbut')
         sleepbut.style.visibility = 'hidden'
     }
     localStorage.setItem("Xpos",(aworld))
+    localStorage.setItem("health points",heal)
     if (lengt != 0) { // Смена локации
         if (pain > 2){
             energy-=3
         }
+        if (pain >0){
+            pain--
+        }
+    }
+    if (energy < 0){ // если слишком устал то здоровье уменьшается
+        energy = 0
+        heal--
+    }
+    if (heal < 0){
+        window.location.replace('dead.html')
     }
 }
 function sleep(){
     let qwerty = document.getElementsByClassName('qwerty')
     let sleepbut = document.getElementById('sleepbut')
     let timer = document.getElementById('timer')
-    let i = 10
+    let i = 20
     energy = 100
     qwerty[0].style.visibility = 'hidden'
     qwerty[1].style.visibility = 'hidden'
@@ -106,6 +118,14 @@ function sleep(){
     timer.style.visibility = 'visible'
     timer.style.display = "inline"
     timer.innerText=("Спать ещё: "+i+" секунд.")
+    if (pain > 0){
+        pain -= 2
+    }
+    if (heal < 91 ){
+        heal += 10
+    }else if(heal > 91 && heal < 100){
+        heal+=5
+    }
     let countdown = setInterval(function() {
         i--
         timer.innerText=("Спать ещё: "+i+" секунд.")
@@ -124,19 +144,22 @@ function sleep(){
 }
 
 function health(){
+    console.log('Здоровье и боль: '+heal+' '+pain)
     if (heal == 100 && pain == 0){
         alert('Я чувствую себя хорошо.')
     }else if(pain <= 2 && heal >= 80){
         alert('Мне не очень хорошо, слегка больно')
     }else if(pain >=3 && pain < 5){
         alert('Довольно больно!')
-    }else if(pain >= 5 && pain < 9){
+    }else if(pain >= 5 && pain < 10){
         alert('Очень больно!')
-    }else if(pain >= 9){
+    }else if(pain >= 10){
         alert('ААААААААААА!')
     }else if(heal <= 90 && pain == 0 && heal > 50){
         alert('Мне не очень хорошо.')
-    }else if(heal <=50 &&pain <=2){
+    }else if(heal <=50){
         alert('Мне плохо.')
+    }else if (heal <=30){
+        alert('Мне сильно плохо , чувствую слабость.')
     }
 }
