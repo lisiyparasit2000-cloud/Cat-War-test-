@@ -58,6 +58,7 @@ function update(lengt){
         player.style.left=xpos+"px"
         
     }
+    
     if (aworld >= world.length){
         aworld = 0
     }else if (aworld < 0){
@@ -81,13 +82,27 @@ function update(lengt){
         energy = 100
     }
     energytext.innerText = "Бодрость: " + energy+'%' //Отображение бодрости
+
+
+
     if (energy < 50){
         let sleepbut = document.getElementById('sleepbut') //отоброжение кнопки поспать
         sleepbut.style.visibility = 'visible'
     }else{
         let sleepbut = document.getElementById('sleepbut')
-        sleepbut.style.visibility = 'hidden'
+        sleepbut.style.visibility = 'hidden'}
+
+
+
+    if (heal < 100){
+        let healbut = document.getElementById('healbut') //отоброжение кнопки Вылизать раны
+        healbut.style.visibility = 'visible'
+    }else{
+        let healbut = document.getElementById('healbut')
+        healbut.style.visibility = 'hidden'
     }
+
+
     localStorage.setItem("Xpos",(aworld))
     localStorage.setItem("health points",heal)
     if (lengt != 0) { // Смена локации
@@ -116,6 +131,7 @@ function sleep(){
     qwerty[1].style.visibility = 'hidden'
     sleepbut.style.visibility = 'hidden'
     timer.style.visibility = 'visible'
+    healbut.style.visibility = 'hidden'
     timer.style.display = "inline"
     timer.innerText=("Спать ещё: "+i+" секунд.")
     if (pain > 0){
@@ -129,7 +145,7 @@ function sleep(){
     let countdown = setInterval(function() {
         i--
         timer.innerText=("Спать ещё: "+i+" секунд.")
-        
+        healbut.style.visibility = 'hidden'
         if (i <= 0) {
             clearInterval(countdown);
             qwerty[0].style.visibility = 'visible'
@@ -141,6 +157,7 @@ function sleep(){
     },1000)
     
     update(0)
+    healbut.style.visibility = 'hidden'
 }
 
 function health(){
@@ -162,4 +179,39 @@ function health(){
     }else if (heal <=30){
         alert('Мне сильно плохо , чувствую слабость.')
     }
+}
+function healing(){ //Вылизывание ран
+    let qwerty = document.getElementsByClassName('qwerty')
+    let sleepbut = document.getElementById('sleepbut')
+    let timer = document.getElementById('timer')
+    let healbut = document.getElementById('healbut')
+    let i = 10
+    qwerty[0].style.visibility = 'hidden'
+    qwerty[1].style.visibility = 'hidden'
+    sleepbut.style.visibility = 'hidden'
+    healbut.style.visibility = 'hidden'
+    timer.style.visibility = 'visible'
+    timer.style.display = "inline"
+    timer.innerText=("Зализывать раны ещё: "+i+" секунд.")
+    if (pain > 0){
+        pain --
+    }
+    if (heal < 100 ){
+        heal += 5
+    let countdown = setInterval(function() {
+        i--
+        timer.innerText=("Зализывать раны ещё: "+i+" секунд.")
+        
+        if (i <= 0) {
+            clearInterval(countdown);
+            qwerty[0].style.visibility = 'visible'
+            qwerty[1].style.visibility = 'visible'
+            sleepbut.style.visibility = 'hidden'
+            timer.style.visibility = 'hidden'
+            timer.style.display = "none"
+            healbut.style.visibility = 'hidden'
+        }
+    },1000)}
+    
+    update(0)
 }
