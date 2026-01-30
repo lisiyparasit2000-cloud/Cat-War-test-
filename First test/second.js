@@ -1,11 +1,12 @@
 let player = document.getElementById('player')
 let xpos = 700
 let locat = document.getElementById('backgrounds') 
-var world = [["back/CT0.jpg", false], ["back/CT1.jpg", false],["back/CT2.jpg",false], ["back/CT3.jpg",false], ["back/CT4.jpg", true]] // массив локаций. 0 - фон, 2 - доступность охоты. 1 - Вода или нет? 
+var world = [["back/CT0.jpg", false, false], ["back/CT1.jpg", false, true],["back/CT2.jpg",false], ["back/CT3.jpg",false, true], ["back/CT4.jpg", true, false]] // массив локаций. 0 - фон, 1 вода или нет? 2 - Охота
 let aworld = 0
 var energy = 100
 var heal = 100
 var pain = 0
+var act = false
 if (localStorage.getItem('Xpos') !== null && localStorage.getItem('Xpos') !== undefined && localStorage.getItem('Xpos') !== 0) {
     aworld = parseInt(localStorage.getItem('Xpos'))
     console.log('ERROR' + localStorage.getItem('Xpos'))
@@ -84,8 +85,8 @@ function update(lengt){
     energytext.innerText = "Бодрость: " + energy+'%' //Отображение бодрости
 
 
-
-    if (energy < 50){
+    if (false == act && false == world[aworld][1]){
+        if (energy < 50){
         let sleepbut = document.getElementById('sleepbut') //отоброжение кнопки поспать
         sleepbut.style.visibility = 'visible'
     }else{
@@ -120,6 +121,8 @@ function update(lengt){
     if (heal < 0){
         window.location.replace('dead.html')
     }
+    }
+    
 }
 function sleep(){
     let qwerty = document.getElementsByClassName('qwerty')
@@ -127,6 +130,7 @@ function sleep(){
     let timer = document.getElementById('timer')
     let i = 20
     energy = 100
+    act = true
     qwerty[0].style.visibility = 'hidden'
     qwerty[1].style.visibility = 'hidden'
     sleepbut.style.visibility = 'hidden'
@@ -153,6 +157,7 @@ function sleep(){
             sleepbut.style.visibility = 'hidden'
             timer.style.visibility = 'hidden'
             timer.style.display = "none"
+            act = false
         }
     },1000)
     
@@ -193,6 +198,7 @@ function healing(){ //Вылизывание ран
     timer.style.visibility = 'visible'
     timer.style.display = "inline"
     timer.innerText=("Зализывать раны ещё: "+i+" секунд.")
+    act = true
     if (pain > 0){
         pain --
     }
@@ -210,8 +216,9 @@ function healing(){ //Вылизывание ран
             timer.style.visibility = 'hidden'
             timer.style.display = "none"
             healbut.style.visibility = 'hidden'
+            act = false
         }
     },1000)}
     
     update(0)
-}
+} 
